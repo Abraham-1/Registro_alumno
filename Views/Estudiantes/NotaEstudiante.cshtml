@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Registro_alumno.Models.Nota>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Nota</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn btn-success">Crear Nota</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Calificacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ponderacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaActualizacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Asignatura)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estudiante)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @{
+        double Promedio = 0;
+    }
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Calificacion) 
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ponderacion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaActualizacion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Asignatura.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Estudiante.Id)
+                </td>
+                <td>
+                    <a asp-action="Edit" class="btn btn-outline-dark" asp-route-id="@item.Id">Editar</a> |
+                    <a asp-action="Details" class="btn btn-outline-info" asp-route-id="@item.Id">Detalles</a> |
+                    <a asp-action="Delete" class="btn btn-outline-danger" asp-route-id="@item.Id">Eliminar</a>
+                </td>
+                @{
+                    Promedio = Math.Round(Promedio + (item.Calificacion * (item.Ponderacion) / 100 / 10));
+                }
+            </tr>
+        } 
+    </tbody>
+</table>
